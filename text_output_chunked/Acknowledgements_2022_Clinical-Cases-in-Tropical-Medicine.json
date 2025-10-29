@@ -1,0 +1,13 @@
+{
+  "patient_information": null,
+  "chief_complaint": null,
+  "history_of_present_illness": null,
+  "exposure_and_epidemiology": null,
+  "vitals": null,
+  "physical_exam": null,
+  "labs_and_diagnostics": null,
+  "differential_diagnosis": null,
+  "management_and_clinical_course": null,
+  "final_diagnosis": null,
+  "disease_name_short": null
+}

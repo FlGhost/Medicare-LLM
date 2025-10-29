@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 52-year-old man with an unremarkable past medical history presented to a clinic in Germany.",
+  "chief_complaint": "The patient presented with a fever for the past 2 days, accompanied by night sweats and a frontal headache.",
+  "history_of_present_illness": "The patient reported a two-day history of fever, night sweats, and frontal headache. He denied any joint pains and had not noticed a rash. He had also noted a skin lesion on his left upper thigh which he had covered with a plaster.",
+  "exposure_and_epidemiology": "The patient was a safari tourist who had returned 10 days prior from a two-week holiday trip to South Africa. His travel included Cape Town, the Garden Route, KwaZulu–Natal, Kruger Park, and several other game reserves. He did not take any antimalarial chemoprophylaxis.",
+  "vitals": "His tympanic temperature was 37.5°C (99.5°F) after taking 1g of paracetamol. His pulse was 80 bpm and his blood pressure was 130/70 mmHg.",
+  "physical_exam": "The patient was in fair general condition. His neck was supple and he was not jaundiced. There were enlarged lymph nodes in his left groin. On his left upper thigh, there was a small necrotic skin lesion, approximately 0.7 cm in diameter, with surrounding inflammation and lymphangiitis, which was identified as a typical eschar.",
+  "labs_and_diagnostics": "A malaria rapid diagnostic test and a thick and thin film for malaria were both negative.",
+  "differential_diagnosis": "The primary differential diagnosis was malaria, as the patient was febrile and had returned from a malaria-endemic region (KwaZulu–Natal) without taking chemoprophylaxis. However, the presence of a typical eschar and regional lymphadenopathy strongly suggested African tick-bite fever.",
+  "management_and_clinical_course": "The patient was prescribed doxycycline 100mg twice daily by mouth for one week. His fever settled within a few days, the lymphadenopathy subsided, and the eschar healed after about two weeks.",
+  "final_diagnosis": "The final diagnosis was African tick-bite fever, caused by Rickettsia africae. The diagnosis was made clinically based on the patient's travel history as a safari tourist in South Africa, a common endemic area, and the characteristic clinical presentation of fever with a pathognomonic inoculation eschar and regional lymphadenitis. Malaria, the main differential, was ruled out with negative rapid diagnostic and microscopic tests.",
+  "disease_name_short": "African tick-bite fever"
+}

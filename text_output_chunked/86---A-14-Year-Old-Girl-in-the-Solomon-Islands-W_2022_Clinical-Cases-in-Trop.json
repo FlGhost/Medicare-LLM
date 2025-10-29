@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 14-year-old girl from the Solomon Islands.",
+  "chief_complaint": "Painless, non-healing large ulcer of the left leg for one month.",
+  "history_of_present_illness": "A 14-year-old girl reported a painless, non-healing large ulcer on her left leg that began one month earlier. A smaller, similar satellite lesion was also noted lower down on the same leg, which is a typical presentation for early yaws lesions. There were no other reported symptoms.",
+  "exposure_and_epidemiology": "The patient was from the Solomon Islands, a region in the West Pacific where yaws is still a common problem. Yaws is spread by skin-to-skin contact in warm, humid environments and is normally seen in young children.",
+  "vitals": null,
+  "physical_exam": "On examination, there was a large lesion approximately 3 cm in diameter on the left lower leg, covered by a layer of crust. A smaller, similar lesion was noted further down the leg. There was no regional lymphadenopathy or evidence of any other skin or bone lesions.",
+  "labs_and_diagnostics": "A rapid plasma reagin (RPR) test was positive at a titre of 1:64. The patient was seen again 12 months later, and a repeat RPR test was positive at a titre of 1:8.",
+  "differential_diagnosis": "The primary diagnosis considered was yaws. Other relevant differential diagnoses included skin lesions caused by Haemophilus ducreyi, pyoderma, tropical ulcer, cutaneous diphtheria, and Aeromonas hydrophila infection.",
+  "management_and_clinical_course": "The patient was treated with a single intramuscular dose of benzathine benzylpenicillin, and the skin lesion resolved over the next 10 days. She presented again 12 months later with a similar ulcer on the right leg. The repeat RPR titre showed a greater than four-fold fall to 1:8, which was considered evidence of cure from the initial infection. The new ulcer on the other leg was therefore interpreted to be of a different aetiology.",
+  "final_diagnosis": "The final diagnosis was yaws, a chronic infectious disease caused by Treponema pallidum subspecies pertenue. The diagnosis was based on the clinical findings of a characteristic chronic leg ulcer with a satellite lesion in a patient from an endemic region. The diagnosis was supported by a high-titer positive rapid plasma reagin (RPR) test of 1:64, and confirmed by the lesion's resolution after treatment and a greater than four-fold fall in the RPR titre at follow-up, indicating cure.",
+  "disease_name_short": "Yaws"
+}

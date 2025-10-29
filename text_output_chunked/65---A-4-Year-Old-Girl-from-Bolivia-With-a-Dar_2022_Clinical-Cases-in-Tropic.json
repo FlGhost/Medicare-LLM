@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 4-year-old girl in good general health.",
+  "chief_complaint": "A slowly growing, moderately painful nodule on the fifth toe of her right foot for several days.",
+  "history_of_present_illness": "The patient presented with a history of a slowly growing nodule on the fifth toe of her right foot over several days. The lesion was moderately painful when she wore shoes. Her parents reported that when they tried to squeeze the lesion, they observed white oval granules emerging from it.",
+  "exposure_and_epidemiology": "The patient and her family moved from Chile to the Cochabamba region in Bolivia about 6 months prior to presentation, where they live on a farm. Her 9-year-old brother has similar lesions on two of his toes. Tungiasis is endemic in Latin America, and zoonotic reservoirs include pigs, dogs, and rats, which are common on farms.",
+  "vitals": null,
+  "physical_exam": "On physical examination, there was a dark-brown small nodule with a tiny central ulceration located close to the root of the fifth toenail of the right foot. The nodule was surrounded by a minimal inflammatory reaction.",
+  "labs_and_diagnostics": "The diagnosis was made clinically. Microscopic examination of removed tissue can be used for confirmation and would show parts of the female flea and typical eggs, measuring approximately 600 x 280 μm.",
+  "differential_diagnosis": null,
+  "management_and_clinical_course": "The recommended treatment was complete removal of the parasite using a sterile needle and/or curette, followed by disinfection and dressing of the resulting wound. Her tetanus vaccination status was to be checked. Following this management, the skin lesion healed within a week without complications.",
+  "final_diagnosis": "The final diagnosis is tungiasis, caused by the burrowing female sand flea, Tunga penetrans. The diagnosis was based on the characteristic clinical presentation of a slowly growing nodular skin lesion with a central ulceration on the toe, the epidemiological context of living on a farm in an endemic region of Bolivia, and the history of extruding white oval granules (eggs) from the lesion. The presence of a similar lesion on her brother further supported the diagnosis.",
+  "disease_name_short": "Tungiasis"
+}

@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 41-year-old male yoga teacher.",
+  "chief_complaint": "Itchy skin eruptions on both upper thighs for the past week.",
+  "history_of_present_illness": "A 41-year-old man presented after developing three intensely itchy skin eruptions on both upper thighs, which began just after his arrival in Australia a week prior. The itch was severe enough to keep him awake at night. He reported no fever, cough, or wheezing and was otherwise completely well.",
+  "exposure_and_epidemiology": "The patient had just returned to Europe from a 10-day trip to northern Australia, where he attended a yoga seminar. On his way to Australia, he had a 3-day stopover for a beach holiday on a Thai island. The infection was likely acquired while lying on the beach or performing yoga exercises in the sand.",
+  "vitals": null,
+  "physical_exam": "On examination, there were a total of three reddish, serpiginous tracks, about 2mm in width, located on both upper thighs. The inguinal lymph nodes were not enlarged, the chest was clear, and the rest of the examination was unremarkable.",
+  "labs_and_diagnostics": "The diagnosis was established clinically, supported by the patient's travel history, and no investigations were required. The case notes that skin biopsy is not helpful, reliable serological tests are unavailable, and blood eosinophilia is present only in a minority of cases.",
+  "differential_diagnosis": "The clinical syndrome was identified as a creeping eruption. The primary differential diagnosis was cutaneous larva migrans (CLM) caused by animal hookworm larvae, which is the most common cause in returned travellers. Other considerations included larva currens caused by Strongyloides stercoralis, which is distinguished by its faster progression and transient nature, and less common causes like Gnathostoma species, Fasciola species, or migratory myiasis.",
+  "management_and_clinical_course": "The patient was prescribed a single-dose treatment of ivermectin (200 μg/kg). The itchy eruptions settled within a few days of taking the medication.",
+  "final_diagnosis": "The final diagnosis was cutaneous larva migrans (CLM), a clinical syndrome resulting from infestation by larvae of animal hookworms. The diagnosis was made based on the characteristic reddish, serpiginous skin tracks and a clear exposure history of contact with sand on beaches in Thailand and Australia. The rapid resolution of symptoms after treatment with ivermectin further supported the diagnosis.",
+  "disease_name_short": "Cutaneous larva migrans"
+}

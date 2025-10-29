@@ -1,0 +1,13 @@
+{
+  "patient_information": "The patient is a 23-year-old male farmer from Myanmar.",
+  "chief_complaint": "Left-sided scrotal swelling for a duration of 3 years.",
+  "history_of_present_illness": "A 23-year-old farmer presented with a 3-year history of left-sided scrotal swelling that was non-tender and had gradually increased in size. He reported no history of fever. An attempt to treat the condition with traditional herbal medicine was unsuccessful.",
+  "exposure_and_epidemiology": "The patient is from the central part of Myanmar. He reported that scrotal swelling is not an uncommon problem in his home region, suggesting a possible infectious etiology endemic to the area.",
+  "vitals": "His vital signs were normal and he was afebrile.",
+  "physical_exam": "The patient was in fair general condition. Examination revealed a non-tender, non-reducible, unilateral scrotal swelling. There were no palpable inguinal lymph nodes.",
+  "labs_and_diagnostics": "An ultrasound confirmed the presence of a hydrocoele.",
+  "differential_diagnosis": "The differential diagnosis for the chronic, non-tender, unilateral scrotal swelling included inguinal hernia, hydrocoele, and testicular tumour. Hernias are often reducible, unlike the patient's swelling. The high prevalence of scrotal swelling in his home region suggested an infectious cause, with lymphatic filariasis caused by Wuchereria bancrofti being the most important consideration, as hydrocoele is its most common clinical abnormality in men. Urogenital schistosomiasis was considered but is not endemic in Southeast Asia. Testicular tuberculosis was deemed unlikely due to the long duration of symptoms without other signs.",
+  "management_and_clinical_course": "The patient underwent a hydrocoelectomy, during which 3 litres of clear fluid were drained. He also received antifilarial treatment. He was subsequently lost to followup as he lived in a remote area.",
+  "final_diagnosis": "The patient was diagnosed with lymphatic filariasis. This diagnosis was based on the classic clinical presentation of a chronic, gradually increasing, non-tender hydrocoele, which was confirmed on ultrasound. The patient's origin from an endemic region in Myanmar where this condition is common provided strong epidemiological evidence. The presumed causative agent is Wuchereria bancrofti, the typical cause of filarial hydrocoele.",
+  "disease_name_short": "Lymphatic filariasis"
+}

@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 33-year-old man from Finland, with a height of 180cm and a weight of 72kg, reporting a 4kg weight loss.",
+  "chief_complaint": "Passage of loose stools and flatulence for two weeks.",
+  "history_of_present_illness": "For the past two weeks, the patient experienced four or five episodes of loose stools per day, associated with weight loss, anorexia, malaise, flatulence, and abdominal cramping when passing stool. For the last three days, he developed bloating, distension, and an urge to defecate after consuming milk products. He reports mild nausea but no fever. The stools were initially watery, but after a 5-day course of ciprofloxacin that ended two days ago, they became mushy, greasy, and foul-smelling, occurring three to four times per day.",
+  "exposure_and_epidemiology": "The patient had been backpacking in India for the month prior to presentation and sought care in Chinglepet, Tamil Nadu.",
+  "vitals": "The patient had no fever. No other vital signs were reported.",
+  "physical_exam": "Physical examination revealed mild, non-specific abdominal tenderness. There were no signs of dehydration, and the rest of the examination was normal.",
+  "labs_and_diagnostics": "Stool analysis was positive for reducing substances. Stool examination for enteric parasites revealed *Giardia* trophozoites in the fresh specimen and *Giardia* cysts in the formol-ether concentrated specimen.",
+  "differential_diagnosis": null,
+  "management_and_clinical_course": "The patient was treated with a single 2g oral dose of tinidazole and was advised to restrict milk and high-sugar products for two weeks. On review three days later, his stool consistency had returned to normal, frequency had decreased, and his nausea and anorexia had improved. He reported feeling much better despite some bloating after consuming a milk-based dessert.",
+  "final_diagnosis": "The final diagnosis is giardiasis, caused by the protozoan *Giardia intestinalis*. The diagnosis was confirmed by the direct identification of *Giardia* trophozoites and cysts in the patient's stool sample. The clinical presentation of persistent diarrhea with greasy, foul-smelling stools, bloating, and post-infectious carbohydrate malabsorption (indicated by positive reducing substances in stool) following travel in an endemic region is characteristic of this infection.",
+  "disease_name_short": "Giardiasis"
+}
