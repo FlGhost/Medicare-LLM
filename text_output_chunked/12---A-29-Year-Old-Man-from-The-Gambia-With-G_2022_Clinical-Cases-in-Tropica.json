@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 29-year-old man from The Gambia who has been previously well. He was tested and found to be HIV-negative.",
+  "chief_complaint": "Painful sores on his private parts for 7 days.",
+  "history_of_present_illness": "For the past 7 days, the patient has had painful genital sores. He is in considerable pain and is only able to walk with difficulty because of these sores. He is otherwise well.",
+  "exposure_and_epidemiology": "The patient resides in The Gambia. He reports having unprotected sex with a commercial sex worker two weeks prior to the onset of his symptoms.",
+  "vitals": "He is afebrile.",
+  "physical_exam": "The patient is well-nourished and the general examination is unremarkable. The only abnormality is the presence of numerous painful, tender, soft ulcers on his penis, scrotum, and inner thigh, which bleed on contact. There is no inguinal lymphadenopathy.",
+  "labs_and_diagnostics": "The patient's syphilis serology was positive (RPR and TPHA). An HIV test was negative. A swab taken from an ulcer for culture of Haemophilus ducreyi was positive, with H. ducreyi grown after three days’ incubation at 33°C.",
+  "differential_diagnosis": "The main differential diagnoses for his genital ulcers were Herpes simplex, syphilis, and chancroid. Herpes simplex ulcers are typically self-limiting, primary syphilis ulcers are usually painless and single, while chancroid ulcers are often multiple and painful, which matched this patient's presentation. However, the text notes that clinical diagnosis alone is unreliable.",
+  "management_and_clinical_course": "The patient was treated syndromically for both syphilis and chancroid. He received a single dose of 2.4 million units of benzathine penicillin intramuscularly and was prescribed erythromycin 500mg four times a day for 7 days. Upon follow-up after 7 days, his pain had resolved and the ulcers were all healing.",
+  "final_diagnosis": "The patient was diagnosed with a mixed infection of chancroid and syphilis. The diagnosis of chancroid was confirmed by the culture of Haemophilus ducreyi from a genital ulcer swab, consistent with his clinical presentation of multiple painful, soft ulcers. The diagnosis of primary syphilis was confirmed by positive RPR and TPHA serology.",
+  "disease_name_short": "Chancroid and Syphilis"
+}

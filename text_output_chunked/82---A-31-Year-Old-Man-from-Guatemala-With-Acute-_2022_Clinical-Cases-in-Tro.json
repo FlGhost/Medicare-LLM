@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 31-year-old Guatemalan man with no past medical history.",
+  "chief_complaint": "Several minutes of weakness and numbness of the leg.",
+  "history_of_present_illness": "The patient presented with weakness and numbness of the leg lasting several minutes, which resolved just before his arrival at the hospital. Two weeks prior, he also experienced two episodes of facial twitching that subsided without intervention after 10 seconds each.",
+  "exposure_and_epidemiology": "The patient was born and lived in a rural area of Guatemala before immigrating to New York 5 years ago. In Guatemala, his family owned uncorralled pigs and his house lacked sanitation services.",
+  "vitals": "His vitals were normal.",
+  "physical_exam": "The physical examination was unremarkable. Cranial nerves were intact. Motor and sensory examinations, deep tendon reflexes, and gait were all normal.",
+  "labs_and_diagnostics": "Initial cell blood count and serum chemistry were within normal limits. A serum immunoblot for cysticercosis was positive, as was the serum cysticercosis antigen at the beginning of therapy. A CT of the head demonstrated multiple calcifications in the brain parenchyma. An MRI of the head revealed complex cystic structures in the subarachnoid space, dilation of the suprasellar and Sylvian cisterns, peripheral enhancement after gadolinium, and an old lacunar infarct. A CT angiography showed patent cerebral arteries. An MRI of the spine showed no evidence of spinal involvement.",
+  "differential_diagnosis": "The patient's presentation was consistent with a transitory ischemic attack. However, the combination of imaging findings, including parenchymal calcified lesions and complex cystic structures, along with the patient's epidemiological risk factors, made neurocysticercosis the most likely diagnosis.",
+  "management_and_clinical_course": "The patient was treated with a high dose of prednisone followed by a taper, and dual antiparasitic therapy with albendazole and praziquantel. After 9 months of treatment, his serum antigen was negative and his lesions had resolved on imaging. He has been followed closely with no recurrence.",
+  "final_diagnosis": "The final diagnosis is subarachnoid neurocysticercosis, caused by the larval form of Taenia solium. This was determined based on the combination of epidemiological risk factors (origin from rural Guatemala with exposure to pigs), characteristic neuroimaging findings of parenchymal calcifications and complex subarachnoid cysts, and was confirmed by a positive serum immunoblot for cysticercosis.",
+  "disease_name_short": "Subarachnoid neurocysticercosis"
+}

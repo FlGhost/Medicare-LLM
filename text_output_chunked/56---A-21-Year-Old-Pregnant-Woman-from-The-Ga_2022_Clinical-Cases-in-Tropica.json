@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 21-year-old woman, 32 weeks pregnant with her first pregnancy. She has no significant past medical history.",
+  "chief_complaint": "A generalized, non-itchy rash for 5 days.",
+  "history_of_present_illness": "The patient presented with a generalized, non-itchy macular rash of 5 days duration that involved the palms of both hands. She reported being otherwise well.",
+  "exposure_and_epidemiology": "The patient was from The Gambia and presented to a local clinic.",
+  "vitals": null,
+  "physical_exam": "Physical examination revealed a generalized, non-itchy macular rash involving the palms of both hands. Her mouth was normal, and there was no lymphadenopathy. She was not anaemic or jaundiced, and the general examination was otherwise unremarkable.",
+  "labs_and_diagnostics": null,
+  "differential_diagnosis": "The case presentation of a generalized, non-itchy rash affecting the palms was considered classic for syphilis, and the text states it is \"syphilis until proven otherwise,\" without discussing other specific differential diagnoses.",
+  "management_and_clinical_course": "The patient was treated with a single intramuscular dose of 2.4 million units of benzathine penicillin and made an uneventful recovery. She delivered a normal infant at term. Because she was treated after 28 weeks' gestation, it was recommended that her infant receive a course of treatment for congenital syphilis with IM procaine penicillin daily for 10–14 days.",
+  "final_diagnosis": "The final diagnosis was secondary syphilis. This was based on the classic clinical presentation of a generalized, non-itchy macular rash that involved the palms of her hands. The diagnosis was presumptive but strongly supported by the pathognomonic features of the rash in a pregnant woman. The patient's subsequent uneventful recovery after treatment with benzathine penicillin further confirms the diagnosis.",
+  "disease_name_short": "Syphilis"
+}

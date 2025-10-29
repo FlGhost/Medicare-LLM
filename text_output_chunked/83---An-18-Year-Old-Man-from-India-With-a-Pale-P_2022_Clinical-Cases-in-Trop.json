@@ -1,0 +1,13 @@
+{
+  "patient_information": "An 18-year-old man from India with no family history of skin problems. He is otherwise well.",
+  "chief_complaint": "A pale patch on his right arm and forearm for 3 months.",
+  "history_of_present_illness": "For the past 3 months, the patient has had a pale patch on his right arm and forearm. The lesion is not itchy or painful, but he reports reduced sensation within the affected area. He also complains of mild numbness of the little finger on his right hand, without any associated weakness.",
+  "exposure_and_epidemiology": "The patient is from India, a leprosy-endemic country. His family and friends were examined and had no signs of leprosy.",
+  "vitals": null,
+  "physical_exam": "Examination revealed a 20 cm by 10 cm hypopigmented macule on the outer aspect of the right arm extending onto the forearm. The affected skin was dry and had reduced sensation compared to normally pigmented skin. The right ulnar nerve was palpable and thickened. There was also reduced sensation on the tip and ulnar border of the right little finger. No other neurological abnormalities were noted.",
+  "labs_and_diagnostics": "No additional investigations were required for diagnosis. It was noted that if performed, a skin biopsy would likely show granulomatous dermatitis with destruction of cutaneous nerves, and a slit-skin smear would likely be negative.",
+  "differential_diagnosis": "The differential diagnosis for a hypopigmented skin lesion includes common conditions like pityriasis alba, pityriasis versicolor, and seborrheic dermatitis. However, the combination of a hypopigmented anaesthetic patch and signs of a neuropathy (a thickened peripheral nerve) are cardinal signs that strongly pointed to a diagnosis of leprosy.",
+  "management_and_clinical_course": "The patient was treated with rifampicin and dapsone for 6 months for paucibacillary leprosy. The sensory neuropathy was managed with oral prednisolone 30 mg daily, which was tapered by 5 mg each month. He was counseled on self-care for his hands to avoid trauma and reassured that he was not an infection risk. The patient made a full recovery.",
+  "final_diagnosis": "The final diagnosis was paucibacillary leprosy, caused by Mycobacterium leprae. The diagnosis was made clinically based on the presence of two cardinal signs: a hypopigmented skin lesion with definite loss of sensation and a thickened peripheral nerve (the right ulnar nerve).",
+  "disease_name_short": "Paucibacillary leprosy"
+}

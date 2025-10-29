@@ -1,0 +1,13 @@
+{
+  "patient_information": "A 32-year-old, previously fit woman of African descent born in Europe.",
+  "chief_complaint": "Fever, jaundice, and confusion.",
+  "history_of_present_illness": "According to her husband, 18 days after returning from a trip to Nigeria, the patient developed a fever. Three days later, she became very unwell with abnormal behaviour.",
+  "exposure_and_epidemiology": "The patient travelled to rural Jos in Nigeria to visit relatives. She is of African descent but was born in Europe and would be unlikely to have any immunity to malaria. People returning from visiting friends and relatives are at high risk of not taking antimalarial prophylaxis.",
+  "vitals": "On examination, her temperature was 37.5°C (99.5°F).",
+  "physical_exam": "The patient was mildly jaundiced and confused, with a Glasgow Coma Scale of 14/15. She had no rash or palpable lymph nodes, and her throat and sclerae were not injected. There were some fine crepitations at the lung bases.",
+  "labs_and_diagnostics": "A malaria blood film revealed a Plasmodium falciparum parasite count of 18%. Her plasma creatinine was 430 μmol/L, indicating acute kidney injury. Later in the clinical course, chest radiography findings were suggestive of ARDS.",
+  "differential_diagnosis": "The primary differential diagnosis was severe falciparum malaria, the most common cause of fever with jaundice or confusion in West Africa. Other possibilities considered included acute viral hepatitis, typhoid fever, leptospirosis, and ascending cholangitis. Viral haemorrhagic fever (VHF) was raised as a concern by the laboratory, but was considered less likely due to the long incubation period (18 days) and the absence of injected sclerae or a rash.",
+  "management_and_clinical_course": "The patient was treated with intravenous artesunate. Despite the parasite count dropping to 5%, she lapsed into a deep coma. Her renal function deteriorated, and she required haemofiltration after her urine output failed to respond to fluid challenges. After the parasites cleared on day 5, her consciousness began to improve, but she developed laboured breathing and ARDS, requiring prolonged respiratory support. She eventually made a full recovery.",
+  "final_diagnosis": "The final diagnosis was severe falciparum malaria. This was confirmed by a malaria blood film showing a high parasite count (18%) of Plasmodium falciparum in a non-immune patient with a relevant travel history to rural Nigeria. The diagnosis was supported by the clinical presentation of fever, confusion, and jaundice, and the development of severe complications including acute kidney injury requiring haemofiltration, cerebral malaria (coma), and ARDS.",
+  "disease_name_short": "Severe falciparum malaria"
+}

@@ -13,7 +13,7 @@ all_pdf_files = [os.path.join(data_folder, f) for f in os.listdir(data_folder) i
 print(f"Found {len(all_pdf_files)} PDF files to process.")
 
 def cleanup_text(text):
-    # regex bullshit
+    # regex shtuffsdjk
     text = re.sub(r'\n+', '\n', text)
     text = '\n'.join(line.strip() for line in text.splitlines())
     text = re.sub(r'^\d+$|^\w$', '', text, flags=re.MULTILINE)
