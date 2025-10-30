@@ -1,201 +1,296 @@
+import os
 import json
-import time
-# import pandas as pd  # Remove pandas
-import polars as pl    # Import polars
-import google.generativeai as genai
-from python_scripts.config import logger, GEMINI_API_KEY
+import polars as pl
+import wandb
+from datasets import Dataset
+from ragas import evaluate, RunConfig
+from ragas.metrics import (
+    faithfulness,
+    answer_relevancy,
+    # context_recall, # This metric requires 'ground_truth_context' which we don't have
+    context_precision
+)
+from python_scripts.config import (
+    logger,
+    GEMINI_API_KEY,
+    WANDB_API_KEY,
+    WANDB_PROJECT,
+    WANDB_ENTITY,
+    HUGGINGFACETOKEN
+)
 from .rag_agent import RAGAgent
 
-# --- Configuration ---
-EVAL_FILE = "evaluation_set.jsonl"
-RESULTS_FILE = "rag_evaluation_results.csv"
-JUDGE_MODEL_NAME = 'gemini-2.5-flash'
+# --- RAGAs Configuration ---
+from langchain_google_genai import ChatGoogleGenerativeAI
+from ragas.llms import LangchainLLMWrapper
+# Use the correct LangChain wrapper for Sentence Transformers
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
-# --- End of Configuration ---
+
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY not found in .env file.")
+
+os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
+
+# This LLM is used by RAGAs to "judge" the results.
+ragas_llm = LangchainLLMWrapper(ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0))
+
+# This embedding model is used by RAGAs for its internal metric calculations.
+# We use HuggingFaceEmbeddings to get the correct .embed_query() method
+logger.info("Loading S-BioBert via LangChain for RAGAs evaluation...")
+model_kwargs = {'use_auth_token': HUGGINGFACETOKEN}
+ragas_embeddings = HuggingFaceEmbeddings(
+    model_name="pritamdeka/S-BioBert-snli-multinli-stsb",
+    model_kwargs=model_kwargs
+)
+logger.info("RAGAs embedding model loaded.")
+# --- End of RAGAs Configuration ---
+
+
+EVAL_FILE = "evaluation_set.jsonl"
+
 
 class RAGEvaluator:
     def __init__(self, agent: RAGAgent):
-        """Initializes the evaluator."""
         self.rag_agent = agent
-        if not GEMINI_API_KEY:
-            raise ValueError("GEMINI_API_KEY not found in .env file.")
-        genai.configure(api_key=GEMINI_API_KEY)
-        self.judge_model = genai.GenerativeModel(JUDGE_MODEL_NAME)
-        logger.info(f"RAG Evaluator initialized with Judge model: {JUDGE_MODEL_NAME}")
+        logger.info("RAG Evaluator initialized with RAGAs metrics.")
 
     def load_evaluation_set(self, filepath: str):
-        """Loads the .jsonl file into a list of dictionaries."""
-        dataset = []
+        """
+        Loads the evaluation set from a JSONL file.
+        Returns:
+          questions: list[str]
+          ground_truth_answers_list: list[Any]  # Renamed for clarity
+        """
+        questions = []
+        ground_truth_answers_list = [] # Renamed
+
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
-                for line in f:
-                    dataset.append(json.loads(line))
+                for lineno, line in enumerate(f, start=1):
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        data = json.loads(line)
+                    except json.JSONDecodeError as e:
+                        logger.error(f"JSON decode error in {filepath} line {lineno}: {e}")
+                        continue
+
+                    q = data.get("question")
+                    if q is None:
+                        logger.warning(f"No 'question' field in line {lineno}. Skipping.")
+                        continue
+                    questions.append(q)
+
+                    gt_answer = data.get("ground_truth_answer")
+                    if gt_answer is None:
+                        logger.warning(f"No ground_truth_answer for question (line {lineno}): {q}")
+                        ground_truth_answers_list.append(None) # Renamed
+                    else:
+                        # Keep raw form. Could be str, list[str], nested lists, etc.
+                        ground_truth_answers_list.append(gt_answer) # Renamed
+
         except FileNotFoundError:
             logger.error(f"Evaluation file not found: {filepath}")
-            return []
-        return dataset
-
-    def judge_faithfulness(self, question: str, answer: str, context: str) -> bool:
-        """Judges if the answer is faithful to the context."""
-        prompt = f"""
-        You are an evaluator. Your task is to determine if the "Generated Answer" is faithful to the "Provided Context".
-        The answer is faithful if ALL information in the answer can be directly verified from the context.
-        The answer is NOT faithful if it contains any information not present in the context (a hallucination).
-        Respond with only "YES" or "NO".
-
-        **Provided Context:**
-        {context}
-
-        **Question:**
-        {question}
-
-        **Generated Answer:**
-        {answer}
-
-        **Faithful (YES or NO):**
-        """
-        try:
-            # Add safety settings to reduce blocking
-            safety_settings = {
-                'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE',
-                'HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE',
-                'HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE',
-                'HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE',
-            }
-            response = self.judge_model.generate_content(prompt, safety_settings=safety_settings)
-            return "YES" in response.text.upper()
+            return [], []
         except Exception as e:
-            logger.warning(f"Faithfulness check failed for question '{question[:30]}...': {e}")
-            return False
+            logger.error(f"Error loading evaluation set: {e}", exc_info=True)
+            return [], []
 
-    def judge_answer_relevancy(self, question: str, answer: str) -> bool:
-        """Judges if the answer is relevant to the question."""
-        prompt = f"""
-        You are an evaluator. Your task is to determine if the "Generated Answer" is a relevant answer to the "User Question".
-        The answer is relevant if it directly addresses the question.
-        The answer is NOT relevant if it is off-topic or doesn't answer the question.
-        Respond with only "YES" or "NO".
+        return questions, ground_truth_answers_list # Renamed
 
-        **User Question:**
-        {question}
-
-        **Generated Answer:**
-        {answer}
-
-        **Relevant (YES or NO):**
+    # Helper functions to robustly coerce ground-truth formats:
+    @staticmethod
+    def extract_first_string(x):
         """
-        try:
-             # Add safety settings to reduce blocking
-            safety_settings = {
-                'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE',
-                'HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE',
-                'HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE',
-                'HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE',
-            }
-            response = self.judge_model.generate_content(prompt, safety_settings=safety_settings)
-            return "YES" in response.text.upper()
-        except Exception as e:
-            logger.warning(f"Relevancy check failed for question '{question[:30]}...': {e}")
-            return False
+        Recursively extract the first string from nested lists/tuples.
+        Returns '' if nothing string-like is found.
+        """
+        if isinstance(x, str):
+            return x
+        if isinstance(x, (list, tuple)) and x:
+            return RAGEvaluator.extract_first_string(x[0])
+        return ""
 
-    def run_evaluation(self):
-        """Loads dataset, runs agent, evaluates answers, and saves results."""
-        dataset = self.load_evaluation_set(EVAL_FILE)
-        if not dataset:
-            return
+    def run_rag_for_evaluation(self, questions: list) -> dict:
+        """
+        Runs the RAG agent for all questions and collects data in the format
+        needed for RAGAs (question, answer, contexts).
+        """
+        logger.info(f"Running RAG agent for {len(questions)} questions...")
+        results = {"question": [], "answer": [], "contexts": []}
 
-        logger.info(f"Loaded {len(dataset)} questions for evaluation.")
-        results = []
-        total_questions = len(dataset)
-
-        for i, item in enumerate(dataset):
-            question = item["question"]
-            ground_truth = item["ground_truth_answer"]
-            logger.info(f"Processing question {i+1}/{total_questions}: {question[:80]}...") # Log shorter question
-
-            # --- Get Answer from RAG Agent ---
-            retrieved_contexts = []
-            generated_answer = "Error retrieving or generating."
-            context_str = "N/A"
-            is_faithful = False
-            is_relevant = False
-
+        for i, question in enumerate(questions):
+            logger.info(f"Processing question {i+1}/{len(questions)}: {question[:80]}...")
+            answer = "Error during generation"
+            contexts_str_list = []
             try:
-                retrieved_contexts = self.rag_agent.search_knowledge_base(question)
-                if not retrieved_contexts:
+                retrieved_contexts_dicts = self.rag_agent.search_knowledge_base(question)
+
+                if not retrieved_contexts_dicts:
                     logger.warning("No context found by agent.")
-                    generated_answer = "No Context Found"
+                    answer = "No Context Found"
                 else:
-                    prompt = self.rag_agent.build_prompt(question, retrieved_contexts)
-                    # Add safety settings here too
+                    # Save contexts as JSON strings (RAGAs expects contexts list[str])
+                    contexts_str_list = [json.dumps(doc) for doc in retrieved_contexts_dicts]
+                    prompt = self.rag_agent.build_prompt(question, retrieved_contexts_dicts)
                     safety_settings = {
                         'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE',
                         'HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE',
                         'HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE',
                         'HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE',
                     }
-                    generated_answer = self.rag_agent.gen_model.generate_content(
-                        prompt, 
+                    answer = self.rag_agent.gen_model.generate_content(
+                        prompt,
                         safety_settings=safety_settings
                     ).text
-                    context_str = "\n---\n".join([json.dumps(doc) for doc in retrieved_contexts])
-                    
-                    # --- Judge the Answer ---
-                    # Only judge if we got an answer based on context
-                    is_faithful = self.judge_faithfulness(question, generated_answer, context_str)
-                    is_relevant = self.judge_answer_relevancy(question, generated_answer)
-                    # Add delay *after* successful API calls
-                    time.sleep(1) # 1 second delay should be enough for 60 RPM models
 
             except Exception as e:
-                logger.error(f"Error during RAG or Judging for question {i+1}: {e}")
-                # Keep generated_answer as the error message or default
+                logger.error(f"Error processing question {i+1}: {e}", exc_info=True)
                 if "quota" in str(e).lower():
-                    logger.error("Quota exceeded. Stopping evaluation.")
-                    break # Stop evaluation if quota is hit
+                    logger.error("Quota exceeded. Stopping generation.")
+                    break
 
-            results.append({
-                "question": question,
-                "generated_answer": generated_answer,
-                "is_faithful": is_faithful,
-                "is_relevant": is_relevant,
-                "ground_truth": ground_truth,
-                "context": context_str
-            })
-            # Removed the sleep here, added it after successful judge calls
+            results["question"].append(question)
+            results["answer"].append(answer)
+            results["contexts"].append(contexts_str_list)
 
-        if not results:
-             logger.warning("No results were generated. Cannot calculate scores.")
-             return
+        return results
 
-        # --- Calculate and Save Scores using Polars ---
-        df = pl.DataFrame(results) 
+    def run_evaluation(self):
+        """Loads dataset, runs agent, evaluates with RAGAs, and logs to W&B."""
 
-        # Calculate scores using Polars expressions (updated)
-        scores = df.select([
-            (pl.col("is_faithful").sum() / pl.len() * 100).alias("faithfulness_score"), 
-            (pl.col("is_relevant").sum() / pl.len() * 100).alias("relevancy_score") 
-        ])
-
-        faithfulness_score = scores["faithfulness_score"][0]
-        relevancy_score = scores["relevancy_score"][0]
-
-        logger.info("--- Evaluation Complete ---")
-        print(f"\nFaithfulness Score: {faithfulness_score:.2f}%")
-        print(f"Answer Relevancy Score: {relevancy_score:.2f}%")
-
-        # Save results using Polars
         try:
-            df.write_csv(RESULTS_FILE) # Polars handles encoding automatically
-            logger.info(f"Detailed results saved to {RESULTS_FILE}")
+            wandb.login(key=WANDB_API_KEY)
+            wandb_run = wandb.init(
+                project=WANDB_PROJECT,
+                entity=WANDB_ENTITY,
+                job_type="evaluation",
+                config={
+                    "embedding_model": self.rag_agent.EMBEDDING_MODEL_NAME,
+                    "generator_model": self.rag_agent.GENERATOR_MODEL_NAME,
+                    "judge_model": "gemini-2.5-flash",
+                    "collection_name": self.rag_agent.COLLECTION_NAME
+                }
+            )
+            logger.info(f"W&B Run initialized. View at: {wandb_run.url}")
         except Exception as e:
-            logger.error(f"Failed to save results to CSV: {e}")
+            logger.error(f"Failed to initialize W&B. Check API key/project settings. {e}")
+            wandb_run = None
 
-# --- Main execution block ---
+        questions, ground_truth_answers_list = self.load_evaluation_set(EVAL_FILE)
+        if not questions:
+            if wandb_run:
+                wandb_run.finish()
+            return
+
+        rag_results = self.run_rag_for_evaluation(questions)
+
+        min_len = min(len(rag_results["question"]), len(ground_truth_answers_list))
+        if min_len == 0:
+            logger.error("No RAG results generated. Cannot evaluate.")
+            if wandb_run:
+                wandb_run.finish()
+            return
+
+        if min_len < len(questions):
+            logger.warning(f"Only evaluating {min_len}/{len(questions)} due to errors.")
+
+        # --- [NEW SIMPLIFIED DATASET PREP] ---
+        # Build dataset_list, ensuring 'ground_truth' is a string
+        dataset_list = []
+        for i in range(min_len):
+            raw_gt_answer = ground_truth_answers_list[i]
+            
+            # RAGAs expects the "ground truth answer" as a string in the 'ground_truth' column
+            gt_answer_str = self.extract_first_string(raw_gt_answer)
+
+            dataset_list.append({
+                "question": rag_results["question"][i],
+                "answer": rag_results["answer"][i],
+                "contexts": rag_results["contexts"][i],
+                "ground_truth": gt_answer_str  # This is the 'ground truth answer' as a string
+            })
+
+        logger.info("Verifying dataset for RAGAs...")
+        # Simple verification
+        for i, s in enumerate(dataset_list[:5]):
+            gt_val = s.get("ground_truth")
+            if not isinstance(gt_val, str):
+                logger.error(f"Sample {i} has invalid ground_truth type: {type(gt_val)}")
+                raise TypeError(f"Dataset preparation failed: ground_truth must be a string. Got: {type(gt_val)}")
+            logger.info(f"Sample {i} verified. ground_truth_type={type(gt_val)}")
+
+        # Create HF Dataset
+        dataset = Dataset.from_list(dataset_list)
+        
+        logger.info("HF Dataset created successfully.")
+        # --- [END OF SIMPLIFIED BLOCK] ---
+
+
+        logger.info("Running RAGAs evaluation (This may take several minutes)")
+        metrics_to_run = [
+            faithfulness,
+            answer_relevancy,
+            context_precision,
+        ]
+
+        try:
+            # --- Reduce concurrency to avoid quota / rate-limit problems ---
+            run_config = RunConfig(max_workers=1)
+
+            result = evaluate(
+                dataset=dataset,
+                metrics=metrics_to_run,
+                llm=ragas_llm,
+                embeddings=ragas_embeddings,
+                raise_exceptions=True, # Set to True for detailed errors
+                run_config=run_config
+            )
+            logger.info("--- RAGAs Evaluation Complete ---")
+
+            print("\n--- RAGAs Evaluation Summary ---")
+            print(result)
+            print("------------------------------")
+            if wandb_run:
+                # Log the dict representation of the RAGAs Score object
+                wandb.log(result.to_dict())
+
+            # Save summary results
+            try:
+                # Use .to_dict() to convert the RAGAs Score object
+                df = pl.DataFrame([result.to_dict()])
+                df.write_csv("ragas_evaluation_summary_results.csv")
+                logger.info("Summary results saved to ragas_evaluation_summary_results.csv")
+            except Exception as e:
+                logger.error(f"Failed to save summary CSV: {e}")
+
+            # Save the detailed per-question scores (if available)
+            try:
+                detailed_df = result.to_pandas()
+                detailed_pl_df = pl.from_pandas(detailed_df)
+                detailed_pl_df.write_csv("ragas_evaluation_detailed_results.csv")
+                logger.info("Detailed results saved to ragas_evaluation_detailed_results.csv")
+                if wandb_run:
+                    wandb_table = wandb.Table(dataframe=detailed_df)
+                    wandb_run.log({"evaluation_details": wandb_table})
+            except Exception as e:
+                logger.warning(f"Could not save detailed per-question results: {e}")
+
+        except Exception as e:
+            logger.error(f"RAGAs evaluation failed: {e}", exc_info=True)
+
+        finally:
+            if wandb_run:
+                wandb_run.finish()
+                logger.info("W&B run finished.")
+
+
 if __name__ == "__main__":
     try:
         agent = RAGAgent()
         evaluator = RAGEvaluator(agent=agent)
         evaluator.run_evaluation()
     except Exception as e:
-        logger.error(f"Failed to run evaluation: {e}", exc_info=True) # Add traceback
+        logger.error(f"Failed to run evaluation: {e}", exc_info=True)

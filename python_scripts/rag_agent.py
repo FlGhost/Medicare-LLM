@@ -22,15 +22,16 @@ COLLECTION_NAME = "main-rag"
 
 class RAGAgent:
     def __init__(self):
-        """
-        Initializes the RAG agent by loading all necessary models and clients.
-        """
-        logger.info("Initializing RAGAgent...")
+        logger.info("Initializing RAGAgent")
+
+        self.EMBEDDING_MODEL_NAME = EMBEDDING_MODEL_NAME
+        self.GENERATOR_MODEL_NAME = GENERATOR_MODEL_NAME
+        self.COLLECTION_NAME = COLLECTION_NAME
         
         # 1. Initialize Embedding Model (for querying)
-        logger.info(f"Loading embedding model: {EMBEDDING_MODEL_NAME}")
+        logger.info(f"Loading embedding model: {self.EMBEDDING_MODEL_NAME}")
         self.embed_model = SentenceTransformer(
-            EMBEDDING_MODEL_NAME, 
+            self.EMBEDDING_MODEL_NAME, 
             use_auth_token=HUGGINGFACETOKEN
         )
         logger.info("Embedding model loaded.")
@@ -50,9 +51,9 @@ class RAGAgent:
         if not GEMINI_API_KEY:
             raise ValueError("GEMINI_API_KEY not found in .env file.")
             
-        logger.info(f"Initializing generative model: {GENERATOR_MODEL_NAME}")
+        logger.info(f"Initializing generative model: {self.GENERATOR_MODEL_NAME}")
         genai.configure(api_key=GEMINI_API_KEY)
-        self.gen_model = genai.GenerativeModel(GENERATOR_MODEL_NAME)
+        self.gen_model = genai.GenerativeModel(self.GENERATOR_MODEL_NAME)
         
         logger.info("RAGAgent initialized successfully.")
 
@@ -140,14 +141,9 @@ class RAGAgent:
 
 # --- Main execution block to test the agent ---
 if __name__ == "__main__":
-    """
-    This part lets you test the agent directly by running:
-    python python_scripts/rag_agent.py
-    """
     try:
         agent = RAGAgent()
         
-        # --- Test Query ---
         test_query = "What are the common symptoms and lab results for Dengue?"
         
         print(f"\nTesting agent with query: '{test_query}'\n")

@@ -1,0 +1,68 @@
+[34m[1mwandb[0m: Detected [instructor, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+2025-10-30 10:18:07,977 - INFO - W&B Run initialized. View at: https://wandb.ai/matrixnova2003-c-ng-ty-c-ph-n-c-ng-ngh-finviet/medicare_llm/runs/4d6hgaew
+2025-10-30 10:18:07,980 - INFO - Running RAG agent for 3 questions...
+2025-10-30 10:18:07,980 - INFO - Processing question 1/3: What were the key warning signs for severe disease in the 52-year-old man from V...
+2025-10-30 10:18:07,981 - INFO - Embedding query: 'What were the key warning signs for severe disease...'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.66it/s]
+2025-10-30 10:18:08,373 - INFO - Searching collection 'main-rag' in Qdrant...
+2025-10-30 10:18:10,432 - INFO - HTTP Request: POST https://2e5c1a74-b157-4ae1-9b1f-6a410fccdfe1.us-east-1-1.aws.cloud.qdrant.io:6333/collections/main-rag/points/search "HTTP/1.1 200 OK"
+2025-10-30 10:18:10,440 - INFO - Retrieved 3 contexts.
+2025-10-30 10:18:17,426 - INFO - Processing question 2/3: What was the final confirmed diagnosis for the patient with evolving shock?...
+2025-10-30 10:18:17,426 - INFO - Embedding query: 'What was the final confirmed diagnosis for the pat...'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  6.21it/s]
+2025-10-30 10:18:17,610 - INFO - Searching collection 'main-rag' in Qdrant...
+2025-10-30 10:18:18,737 - INFO - HTTP Request: POST https://2e5c1a74-b157-4ae1-9b1f-6a410fccdfe1.us-east-1-1.aws.cloud.qdrant.io:6333/collections/main-rag/points/search "HTTP/1.1 200 OK"
+2025-10-30 10:18:18,745 - INFO - Retrieved 3 contexts.
+2025-10-30 10:18:22,659 - INFO - Processing question 3/3: What are the three phases of severe dengue disease?...
+2025-10-30 10:18:22,660 - INFO - Embedding query: 'What are the three phases of severe dengue disease...'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  7.55it/s]
+2025-10-30 10:18:22,802 - INFO - Searching collection 'main-rag' in Qdrant...
+2025-10-30 10:18:23,087 - INFO - HTTP Request: POST https://2e5c1a74-b157-4ae1-9b1f-6a410fccdfe1.us-east-1-1.aws.cloud.qdrant.io:6333/collections/main-rag/points/search "HTTP/1.1 200 OK"
+2025-10-30 10:18:23,095 - INFO - Retrieved 3 contexts.
+2025-10-30 10:18:25,340 - INFO - Running RAGAs evaluation (This may take several minutes)
+2025-10-30 10:18:26,590 - ERROR - RAGAs evaluation failed: 1 validation error for SingleTurnSample
+reference
+  Input should be a valid string [type=string_type, input_value=['Warning signs included ...g of thrombocytopenia.'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type
+Traceback (most recent call last):
+  File "D:\Personal tasks\Medicare-LLM\python_scripts\evaluation.py", line 225, in run_evaluation
+    result = evaluate(
+             ^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\_analytics.py", line 277, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\evaluation.py", line 461, in evaluate
+    return run(_async_wrapper())
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\async_utils.py", line 156, in run
+    return asyncio.run(coro)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\evaluation.py", line 434, in _async_wrapper
+    return await aevaluate(
+           ^^^^^^^^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\evaluation.py", line 143, in aevaluate
+    dataset = EvaluationDataset.from_list(dataset.to_list())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\dataset_schema.py", line 383, in from_list
+    samples.extend(SingleTurnSample(**sample) for sample in data)
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\ragas\dataset_schema.py", line 383, in <genexpr>
+    samples.extend(SingleTurnSample(**sample) for sample in data)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\minh.ha\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pydantic\main.py", line 253, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for SingleTurnSample
+reference
+  Input should be a valid string [type=string_type, input_value=['Warning signs included ...g of thrombocytopenia.'], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/string_type

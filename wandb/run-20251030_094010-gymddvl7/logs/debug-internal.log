@@ -1,0 +1,12 @@
+{"time":"2025-10-30T09:40:11.2951399+07:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-10-30T09:40:11.8278836+07:00","level":"INFO","msg":"stream: created new stream","id":"gymddvl7"}
+{"time":"2025-10-30T09:40:11.8296154+07:00","level":"INFO","msg":"handler: started","stream_id":"gymddvl7"}
+{"time":"2025-10-30T09:40:11.8334109+07:00","level":"INFO","msg":"stream: started","id":"gymddvl7"}
+{"time":"2025-10-30T09:40:11.8334109+07:00","level":"INFO","msg":"writer: started","stream_id":"gymddvl7"}
+{"time":"2025-10-30T09:40:11.8340704+07:00","level":"INFO","msg":"sender: started","stream_id":"gymddvl7"}
+{"time":"2025-10-30T09:40:28.8772408+07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-10-30T09:40:29.3210338+07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-10-30T09:40:29.333883+07:00","level":"INFO","msg":"stream: closing","id":"gymddvl7"}
+{"time":"2025-10-30T09:40:29.333883+07:00","level":"INFO","msg":"handler: closed","stream_id":"gymddvl7"}
+{"time":"2025-10-30T09:40:29.3360764+07:00","level":"INFO","msg":"sender: closed","stream_id":"gymddvl7"}
+{"time":"2025-10-30T09:40:29.3366649+07:00","level":"INFO","msg":"stream: closed","id":"gymddvl7"}

@@ -1,0 +1,72 @@
+_wandb:
+    value:
+        cli_version: 0.22.3
+        e:
+            40p7jqc1r4bsk4o1jso3vd9i6ej6h2m8:
+                cpu_count: 10
+                cpu_count_logical: 12
+                disk:
+                    /:
+                        total: "350925877248"
+                        used: "192611581952"
+                email: matrixnova2003@gmail.com
+                executable: D:\Users\minh.ha\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe
+                git:
+                    commit: 58a39f509b9b2c628a5f807e8d37d26ff389797a
+                    remote: https://github.com/MatrixNova/Medicare-LLM.git
+                host: FV-LT2025-0050
+                memory:
+                    total: "16849256448"
+                os: Windows-10-10.0.26100-SP0
+                program: -m python_scripts.evaluation
+                python: CPython 3.11.9
+                root: D:\Personal tasks\Medicare-LLM
+                startedAt: "2025-10-30T03:48:39.835033Z"
+                writerId: 40p7jqc1r4bsk4o1jso3vd9i6ej6h2m8
+        m: []
+        python_version: 3.11.9
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 75
+                - 95
+                - 98
+                - 105
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 75
+                - 95
+                - 98
+                - 105
+            "3":
+                - 2
+                - 16
+            "4": 3.11.9
+            "5": 0.22.3
+            "6": 4.53.3
+            "8":
+                - 3
+            "12": 0.22.3
+            "13": windows-amd64
+collection_name:
+    value: main-rag
+embedding_model:
+    value: pritamdeka/S-BioBert-snli-multinli-stsb
+generator_model:
+    value: gemini-2.5-flash
+judge_model:
+    value: gemini-2.5-flash

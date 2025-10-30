@@ -1,0 +1,12 @@
+{"time":"2025-10-30T09:32:56.7174107+07:00","level":"INFO","msg":"stream: starting","core version":"0.22.3"}
+{"time":"2025-10-30T09:32:57.3883928+07:00","level":"INFO","msg":"stream: created new stream","id":"ytr5ggks"}
+{"time":"2025-10-30T09:32:57.3907241+07:00","level":"INFO","msg":"handler: started","stream_id":"ytr5ggks"}
+{"time":"2025-10-30T09:32:57.3926814+07:00","level":"INFO","msg":"stream: started","id":"ytr5ggks"}
+{"time":"2025-10-30T09:32:57.3926814+07:00","level":"INFO","msg":"writer: started","stream_id":"ytr5ggks"}
+{"time":"2025-10-30T09:32:57.3926814+07:00","level":"INFO","msg":"sender: started","stream_id":"ytr5ggks"}
+{"time":"2025-10-30T09:33:19.1378984+07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-10-30T09:33:19.615198+07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-10-30T09:33:19.6210758+07:00","level":"INFO","msg":"stream: closing","id":"ytr5ggks"}
+{"time":"2025-10-30T09:33:19.6210758+07:00","level":"INFO","msg":"handler: closed","stream_id":"ytr5ggks"}
+{"time":"2025-10-30T09:33:19.6215898+07:00","level":"INFO","msg":"sender: closed","stream_id":"ytr5ggks"}
+{"time":"2025-10-30T09:33:19.6215898+07:00","level":"INFO","msg":"stream: closed","id":"ytr5ggks"}
