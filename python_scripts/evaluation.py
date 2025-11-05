@@ -7,7 +7,6 @@ from ragas import evaluate, RunConfig
 from ragas.metrics import (
     faithfulness,
     answer_relevancy,
-    # context_recall, # This metric requires 'ground_truth_context' which we don't have
     context_precision
 )
 from python_scripts.config import (
@@ -19,6 +18,9 @@ from python_scripts.config import (
     HUGGINGFACETOKEN
 )
 from .rag_agent import RAGAgent
+
+# We need numpy to calculate the average (mean) of the scores
+import numpy as np
 
 # --- RAGAs Configuration ---
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -36,7 +38,6 @@ os.environ["GOOGLE_API_KEY"] = GEMINI_API_KEY
 ragas_llm = LangchainLLMWrapper(ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0))
 
 # This embedding model is used by RAGAs for its internal metric calculations.
-# We use HuggingFaceEmbeddings to get the correct .embed_query() method
 logger.info("Loading S-BioBert via LangChain for RAGAs evaluation...")
 model_kwargs = {'use_auth_token': HUGGINGFACETOKEN}
 ragas_embeddings = HuggingFaceEmbeddings(
@@ -60,10 +61,10 @@ class RAGEvaluator:
         Loads the evaluation set from a JSONL file.
         Returns:
           questions: list[str]
-          ground_truth_answers_list: list[Any]  # Renamed for clarity
+          ground_truth_answers_list: list[Any]
         """
         questions = []
-        ground_truth_answers_list = [] # Renamed
+        ground_truth_answers_list = []
 
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
@@ -86,10 +87,9 @@ class RAGEvaluator:
                     gt_answer = data.get("ground_truth_answer")
                     if gt_answer is None:
                         logger.warning(f"No ground_truth_answer for question (line {lineno}): {q}")
-                        ground_truth_answers_list.append(None) # Renamed
+                        ground_truth_answers_list.append(None)
                     else:
-                        # Keep raw form. Could be str, list[str], nested lists, etc.
-                        ground_truth_answers_list.append(gt_answer) # Renamed
+                        ground_truth_answers_list.append(gt_answer)
 
         except FileNotFoundError:
             logger.error(f"Evaluation file not found: {filepath}")
@@ -98,7 +98,7 @@ class RAGEvaluator:
             logger.error(f"Error loading evaluation set: {e}", exc_info=True)
             return [], []
 
-        return questions, ground_truth_answers_list # Renamed
+        return questions, ground_truth_answers_list
 
     # Helper functions to robustly coerce ground-truth formats:
     @staticmethod
@@ -198,23 +198,19 @@ class RAGEvaluator:
             logger.warning(f"Only evaluating {min_len}/{len(questions)} due to errors.")
 
         # --- [NEW SIMPLIFIED DATASET PREP] ---
-        # Build dataset_list, ensuring 'ground_truth' is a string
         dataset_list = []
         for i in range(min_len):
             raw_gt_answer = ground_truth_answers_list[i]
-            
-            # RAGAs expects the "ground truth answer" as a string in the 'ground_truth' column
             gt_answer_str = self.extract_first_string(raw_gt_answer)
 
             dataset_list.append({
                 "question": rag_results["question"][i],
                 "answer": rag_results["answer"][i],
                 "contexts": rag_results["contexts"][i],
-                "ground_truth": gt_answer_str  # This is the 'ground truth answer' as a string
+                "ground_truth": gt_answer_str
             })
 
         logger.info("Verifying dataset for RAGAs...")
-        # Simple verification
         for i, s in enumerate(dataset_list[:5]):
             gt_val = s.get("ground_truth")
             if not isinstance(gt_val, str):
@@ -222,9 +218,7 @@ class RAGEvaluator:
                 raise TypeError(f"Dataset preparation failed: ground_truth must be a string. Got: {type(gt_val)}")
             logger.info(f"Sample {i} verified. ground_truth_type={type(gt_val)}")
 
-        # Create HF Dataset
         dataset = Dataset.from_list(dataset_list)
-        
         logger.info("HF Dataset created successfully.")
         # --- [END OF SIMPLIFIED BLOCK] ---
 
@@ -237,7 +231,6 @@ class RAGEvaluator:
         ]
 
         try:
-            # --- Reduce concurrency to avoid quota / rate-limit problems ---
             run_config = RunConfig(max_workers=1)
 
             result = evaluate(
@@ -245,7 +238,7 @@ class RAGEvaluator:
                 metrics=metrics_to_run,
                 llm=ragas_llm,
                 embeddings=ragas_embeddings,
-                raise_exceptions=True, # Set to True for detailed errors
+                raise_exceptions=True, 
                 run_config=run_config
             )
             logger.info("--- RAGAs Evaluation Complete ---")
@@ -253,30 +246,64 @@ class RAGEvaluator:
             print("\n--- RAGAs Evaluation Summary ---")
             print(result)
             print("------------------------------")
+
+            # --- [FINAL FIX BLOCK v3] ---
+            # 'result' contains LISTS of scores. We must handle this.
+            
+            # 1. Create a dict with the LISTS for W&B histograms
+            list_summary_dict = {
+                "faithfulness_scores": result['faithfulness'],
+                "answer_relevancy_scores": result['answer_relevancy'],
+                "context_precision_scores": result['context_precision']
+            }
+            logger.info(f"Logging score lists to W&B: {list_summary_dict}")
+
+            # 2. Create a dict with the AVERAGES for the CSV and W&B summary
+            avg_summary_dict = {
+                "faithfulness": np.mean(result['faithfulness']),
+                "answer_relevancy": np.mean(result['answer_relevancy']),
+                "context_precision": np.mean(result['context_precision'])
+            }
+            logger.info(f"Logging summary averages: {avg_summary_dict}")
+
             if wandb_run:
-                # Log the dict representation of the RAGAs Score object
-                wandb.log(result.to_dict())
+                # Log both! Histograms and the final average numbers
+                wandb.log(list_summary_dict)
+                wandb.log(avg_summary_dict)
+            # --- [END FINAL FIX BLOCK] ---
 
             # Save summary results
             try:
-                # Use .to_dict() to convert the RAGAs Score object
-                df = pl.DataFrame([result.to_dict()])
+                # [FIX 2] Save the AVERAGE scores to the CSV
+                df = pl.DataFrame([avg_summary_dict])
                 df.write_csv("ragas_evaluation_summary_results.csv")
                 logger.info("Summary results saved to ragas_evaluation_summary_results.csv")
             except Exception as e:
                 logger.error(f"Failed to save summary CSV: {e}")
 
-            # Save the detailed per-question scores (if available)
+            # Save the detailed per-question scores
             try:
-                detailed_df = result.to_pandas()
+                # [FIX 3] To save CSV/W&B Table, we must "flatten" the 'contexts' list
+                dataset_for_csv = dataset.map(
+                    lambda x: {"contexts_str": str(x["contexts"])}
+                )
+                
+                detailed_df = dataset_for_csv.to_pandas()
+                
+                # Drop the original nested column to avoid errors
+                if "contexts" in detailed_df.columns:
+                     detailed_df = detailed_df.drop(columns=["contexts"])
+                
                 detailed_pl_df = pl.from_pandas(detailed_df)
                 detailed_pl_df.write_csv("ragas_evaluation_detailed_results.csv")
                 logger.info("Detailed results saved to ragas_evaluation_detailed_results.csv")
+                
                 if wandb_run:
+                    # Log the "safe" dataframe to W&B
                     wandb_table = wandb.Table(dataframe=detailed_df)
                     wandb_run.log({"evaluation_details": wandb_table})
             except Exception as e:
-                logger.warning(f"Could not save detailed per-question results: {e}")
+                logger.warning(f"Could not save detailed per-question results: {e}", exc_info=True)
 
         except Exception as e:
             logger.error(f"RAGAs evaluation failed: {e}", exc_info=True)
