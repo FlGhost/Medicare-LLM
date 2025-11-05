@@ -199,15 +199,16 @@ COLLECTION_NAME = "main-rag"
 
 class RAGAgent:
     def __init__(self):
-        """
-        Initializes the RAG agent by loading all necessary models and clients.
-        """
-        logger.info("Initializing RAGAgent...")
+        logger.info("Initializing RAGAgent")
+
+        self.EMBEDDING_MODEL_NAME = EMBEDDING_MODEL_NAME
+        self.GENERATOR_MODEL_NAME = GENERATOR_MODEL_NAME
+        self.COLLECTION_NAME = COLLECTION_NAME
         
         # 1. Initialize Embedding Model (for querying)
-        logger.info(f"Loading embedding model: {EMBEDDING_MODEL_NAME}")
+        logger.info(f"Loading embedding model: {self.EMBEDDING_MODEL_NAME}")
         self.embed_model = SentenceTransformer(
-            EMBEDDING_MODEL_NAME, 
+            self.EMBEDDING_MODEL_NAME, 
             use_auth_token=HUGGINGFACETOKEN
         )
         logger.info("Embedding model loaded.")
