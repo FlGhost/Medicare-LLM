@@ -1,0 +1,41 @@
+[34m[1mwandb[0m: Detected [instructor, openai] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Weave is installed but not imported. Add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai/
+2025-10-30 10:48:41,638 - INFO - W&B Run initialized. View at: https://wandb.ai/matrixnova2003-c-ng-ty-c-ph-n-c-ng-ngh-finviet/medicare_llm/runs/733vpl6b
+2025-10-30 10:48:41,640 - INFO - Running RAG agent for 3 questions...
+2025-10-30 10:48:41,640 - INFO - Processing question 1/3: What were the key warning signs for severe disease in the 52-year-old man from V...
+2025-10-30 10:48:41,641 - INFO - Embedding query: 'What were the key warning signs for severe disease...'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  2.48it/s]
+2025-10-30 10:48:42,057 - INFO - Searching collection 'main-rag' in Qdrant...
+2025-10-30 10:48:43,189 - INFO - HTTP Request: POST https://2e5c1a74-b157-4ae1-9b1f-6a410fccdfe1.us-east-1-1.aws.cloud.qdrant.io:6333/collections/main-rag/points/search "HTTP/1.1 200 OK"
+2025-10-30 10:48:43,200 - INFO - Retrieved 3 contexts.
+2025-10-30 10:48:47,754 - INFO - Processing question 2/3: What was the final confirmed diagnosis for the patient with evolving shock?...
+2025-10-30 10:48:47,763 - INFO - Embedding query: 'What was the final confirmed diagnosis for the pat...'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  8.06it/s]
+2025-10-30 10:48:47,904 - INFO - Searching collection 'main-rag' in Qdrant...
+2025-10-30 10:48:48,192 - INFO - HTTP Request: POST https://2e5c1a74-b157-4ae1-9b1f-6a410fccdfe1.us-east-1-1.aws.cloud.qdrant.io:6333/collections/main-rag/points/search "HTTP/1.1 200 OK"
+2025-10-30 10:48:48,196 - INFO - Retrieved 3 contexts.
+2025-10-30 10:48:52,419 - INFO - Processing question 3/3: What are the three phases of severe dengue disease?...
+2025-10-30 10:48:52,421 - INFO - Embedding query: 'What are the three phases of severe dengue disease...'
+Batches: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  5.43it/s]
+2025-10-30 10:48:52,629 - INFO - Searching collection 'main-rag' in Qdrant...
+2025-10-30 10:48:52,913 - INFO - HTTP Request: POST https://2e5c1a74-b157-4ae1-9b1f-6a410fccdfe1.us-east-1-1.aws.cloud.qdrant.io:6333/collections/main-rag/points/search "HTTP/1.1 200 OK"
+2025-10-30 10:48:52,920 - INFO - Retrieved 3 contexts.
+2025-10-30 10:48:55,130 - INFO - Verifying dataset for RAGAs...
+2025-10-30 10:48:55,131 - INFO - Sample 0 verified. ground_truth_type=<class 'str'>
+2025-10-30 10:48:55,132 - INFO - Sample 1 verified. ground_truth_type=<class 'str'>
+2025-10-30 10:48:55,133 - INFO - Sample 2 verified. ground_truth_type=<class 'str'>
+2025-10-30 10:48:55,165 - INFO - HF Dataset created successfully.
+2025-10-30 10:48:55,165 - INFO - Running RAGAs evaluation (This may take several minutes)
+Evaluating: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9/9 [02:33<00:00, 17.05s/it]
+2025-10-30 10:51:33,310 - INFO - --- RAGAs Evaluation Complete ---
+
+--- RAGAs Evaluation Summary ---
+{'faithfulness': 0.2821, 'answer_relevancy': 0.5301, 'context_precision': 0.1667}
+------------------------------
+2025-10-30 10:51:33,315 - ERROR - RAGAs evaluation failed: 'EvaluationResult' object has no attribute 'to_dict'
+Traceback (most recent call last):
+  File "D:\Personal tasks\Medicare-LLM\python_scripts\evaluation.py", line 258, in run_evaluation
+    wandb.log(result.to_dict())
+              ^^^^^^^^^^^^^^
+AttributeError: 'EvaluationResult' object has no attribute 'to_dict'

@@ -1,0 +1,26 @@
+2025-10-30 10:48:39,842 INFO    MainThread:10188 [wandb_setup.py:_flush():81] Current SDK version is 0.22.3
+2025-10-30 10:48:39,842 INFO    MainThread:10188 [wandb_setup.py:_flush():81] Configure stats pid to 10188
+2025-10-30 10:48:39,842 INFO    MainThread:10188 [wandb_setup.py:_flush():81] Loading settings from D:\Users\minh.ha\.config\wandb\settings
+2025-10-30 10:48:39,842 INFO    MainThread:10188 [wandb_setup.py:_flush():81] Loading settings from D:\Personal tasks\Medicare-LLM\wandb\settings
+2025-10-30 10:48:39,842 INFO    MainThread:10188 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-10-30 10:48:39,845 INFO    MainThread:10188 [wandb_init.py:setup_run_log_directory():706] Logging user logs to D:\Personal tasks\Medicare-LLM\wandb\run-20251030_104839-733vpl6b\logs\debug.log
+2025-10-30 10:48:39,845 INFO    MainThread:10188 [wandb_init.py:setup_run_log_directory():707] Logging internal logs to D:\Personal tasks\Medicare-LLM\wandb\run-20251030_104839-733vpl6b\logs\debug-internal.log
+2025-10-30 10:48:39,845 INFO    MainThread:10188 [wandb_init.py:init():833] calling init triggers
+2025-10-30 10:48:39,845 INFO    MainThread:10188 [wandb_init.py:init():838] wandb.init called with sweep_config: {}
+config: {'embedding_model': 'pritamdeka/S-BioBert-snli-multinli-stsb', 'generator_model': 'gemini-2.5-flash', 'judge_model': 'gemini-2.5-flash', 'collection_name': 'main-rag', '_wandb': {}}
+2025-10-30 10:48:39,845 INFO    MainThread:10188 [wandb_init.py:init():881] starting backend
+2025-10-30 10:48:40,108 INFO    MainThread:10188 [wandb_init.py:init():884] sending inform_init request
+2025-10-30 10:48:40,258 INFO    MainThread:10188 [wandb_init.py:init():892] backend started and connected
+2025-10-30 10:48:40,262 INFO    MainThread:10188 [wandb_init.py:init():962] updated telemetry
+2025-10-30 10:48:40,429 INFO    MainThread:10188 [wandb_init.py:init():986] communicating run to backend with 90.0 second timeout
+2025-10-30 10:48:41,216 INFO    MainThread:10188 [wandb_init.py:init():1033] starting run threads in backend
+2025-10-30 10:48:41,630 INFO    MainThread:10188 [wandb_run.py:_console_start():2506] atexit reg
+2025-10-30 10:48:41,631 INFO    MainThread:10188 [wandb_run.py:_redirect():2354] redirect: wrap_raw
+2025-10-30 10:48:41,633 INFO    MainThread:10188 [wandb_run.py:_redirect():2423] Wrapping output streams.
+2025-10-30 10:48:41,633 INFO    MainThread:10188 [wandb_run.py:_redirect():2446] Redirects installed.
+2025-10-30 10:48:41,636 INFO    MainThread:10188 [wandb_init.py:init():1073] run started, returning control to user process
+2025-10-30 10:51:33,318 INFO    MainThread:10188 [wandb_run.py:_finish():2272] finishing run matrixnova2003-c-ng-ty-c-ph-n-c-ng-ngh-finviet/medicare_llm/733vpl6b
+2025-10-30 10:51:33,319 INFO    MainThread:10188 [wandb_run.py:_atexit_cleanup():2471] got exitcode: 0
+2025-10-30 10:51:33,320 INFO    MainThread:10188 [wandb_run.py:_restore():2453] restore
+2025-10-30 10:51:33,320 INFO    MainThread:10188 [wandb_run.py:_restore():2459] restore done
+2025-10-30 10:51:34,852 INFO    MainThread:10188 [wandb_run.py:_footer_sync_info():3835] logging synced files
